@@ -48,6 +48,7 @@ app.get("/delete", async(req, res) => {
     res.redirect("/");
 });
 
+//uruchomienie serwera na wskazanym porcie
 app.listen(PORT, () => {
     console.log(`Serwer działa na http://localhost:${PORT}`);
 });
