@@ -34,7 +34,7 @@ app.get("/", async (req, res) => {
 });
 
 //dodawanie zadania
-app.get("/add", async (req, res) =>{
+app.post("/add", async (req, res) =>{
     const taskName = req.body.task;
     const newTask = new Task({ name: taskName });
     await newTask.save();
@@ -42,7 +42,7 @@ app.get("/add", async (req, res) =>{
 });
 
 //usuwanie zadania
-app.get("/delete", async(req, res) => {
+app.post("/delete", async(req, res) => {
     const taskId = req.body.taskId;
     await Task.findByIdAndDelete(taskId);
     res.redirect("/");
