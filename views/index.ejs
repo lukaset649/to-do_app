@@ -15,9 +15,9 @@
         </form>
         <!-- kod EJS iterujący po każdym elemencie tablicy tasks i dla każdego dodaje kod html -->
         <ul id="taskList">
-            <% tasks.forEach(task => { %>
+            <% tasks.forEach(function(task) { %>
                 <li id="task-<%= task._id %>">
-                    <button onclick="deleteTask('<%= task._id>', this)">Usuń</button>
+                    <button onclick="deleteTask('<%= task._id %>', this)">Usuń</button>
                     <%= task.name %>
                 </li>
             <% }); %>
