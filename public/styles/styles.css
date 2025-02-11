@@ -1,18 +1,66 @@
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
 }
 
-section {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
-
-input, button {
-    margin: 5px;
+body{
+    width: 100%;
+    min-height: 100vh;
+    background: linear-gradient(145deg, #264264, #141414);
     padding: 10px;
 }
+
+.container{
+    max-width: 50vw;
+    background: #fff;
+    border-radius: 10px;
+    padding: 40px 30px 70px;
+    margin: 100px auto;
+}
+
+header{
+    color: #051e46;
+    font-weight: bolder;
+    display: flex;
+    align-items:end;
+}
+
+header h1{
+    margin-bottom: 5px;
+    font-size: 32px;
+}
+
+#taskForm{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #dce0e7;
+    border-radius: 25px;
+    padding-left: 30px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+input{
+    border: none;
+    outline: none;
+    background: transparent;
+    flex: 1;
+    padding: 15px;
+}
+
+button{
+    border: none;
+    outline: none;
+    padding: 16px 50px;
+    background: #2ca33c;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 25px;
+}
+
+li button{
+    background: #ff5945;
+} 
