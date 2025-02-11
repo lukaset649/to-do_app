@@ -9,22 +9,21 @@
 <body>
     <section>
         <h1>Lista To-Do</h1>
-        <form action="/add" method="POST">
-            <input type="text" name="task" required placeholder="Dodaj zadanie">
+        <form id="taskForm">
+            <input type="text" name="task" id="taskInput" required placeholder="Dodaj zadanie">
             <button type="submit">Dodaj</button>
         </form>
         <!-- kod EJS iterujący po każdym elemencie tablicy tasks i dla każdego dodaje kod html -->
-        <ul>
+        <ul id="taskList">
             <% tasks.forEach(task => { %>
-                <li>
-                    <form action="/delete" method="POST" style="display: inline;">
-                        <input type="hidden" name="taskId" value="<%= task._id %>">
-                        <button type="submit">Usuń</button>
-                    </form>
+                <li id="task-<%= task._id %>">
+                    <button onclick="deleteTask('<%= task._id>', this)">Usuń</button>
                     <%= task.name %>
                 </li>
             <% }); %>
         </ul>
     </section>
+    <!-- Skrypt do obsługi formularza za pomocą Fetch API-->
+    <script src="/js/fetch.js"></script>
 </body>
 </html>
