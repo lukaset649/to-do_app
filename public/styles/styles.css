@@ -63,4 +63,20 @@ button{
 
 li button{
     background: #ff5945;
+
 } 
+
+ul li{
+    list-style: none;
+    padding: 12px 8px 12px 50px;
+}
+
+ul li p{
+    width:70%;
+    display: inline-block;
+}
+
+.separator{
+    border-top: 3px solid #b4abcc83;
+    margin-top: 10px;
+}

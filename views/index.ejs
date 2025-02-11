@@ -21,8 +21,11 @@
             <% tasks.forEach(function(task) { %>
                 <!-- Sprawdź, czy task.name jest dostępne -->
                 <li id="task-<%= task._id %>">
-                    <%= task.name || "Brak nazwy" %> <!-- Dodajemy domyślną wartość w razie braku name -->
+                    <p>
+                        <%= task.name || "Brak nazwy" %> <!-- Dodajemy domyślną wartość w razie braku name -->
+                    </p>
                     <button onclick="deleteTask('<%= task._id %>', this)">Usuń</button>
+                    <hr class="separator">
                 </li>
             <% }); %>
         </ul>
