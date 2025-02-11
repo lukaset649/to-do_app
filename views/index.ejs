@@ -16,12 +16,14 @@
         <!-- kod EJS iterujący po każdym elemencie tablicy tasks i dla każdego dodaje kod html -->
         <ul id="taskList">
             <% tasks.forEach(function(task) { %>
+                <!-- Sprawdź, czy task.name jest dostępne -->
                 <li id="task-<%= task._id %>">
                     <button onclick="deleteTask('<%= task._id %>', this)">Usuń</button>
-                    <%= task.name %>
+                    <%= task.name || "Brak nazwy" %> <!-- Dodajemy domyślną wartość w razie braku name -->
                 </li>
             <% }); %>
         </ul>
+        
     </section>
     <!-- Skrypt do obsługi formularza za pomocą Fetch API-->
     <script src="/js/fetch.js"></script>

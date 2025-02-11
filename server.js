@@ -22,9 +22,11 @@ const Task = mongoose.model("Task", taskSchema);
 // Konfiguracja aplikacji, obsługa formularzy, plików statycznych i szablonów EJS
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
+app.use(express.json());  // Dodaj obsługę danych JSON
 app.set("view engine", "ejs");
 
 // Definicje tras
+
 // Pobieranie zadań z bazy danych i renderowanie widoku
 app.get("/", async (req, res) => {
     try {
@@ -39,21 +41,28 @@ app.get("/", async (req, res) => {
 
 // Dodawanie zadania
 app.post("/add", async (req, res) => {
-    try {
-        const taskName = req.body.task;
-        const newTask = new Task({ name: taskName });
-        await newTask.save();
-        // Odpowiadamy JSON-em z nowym zadaniem
-        res.json(newTask);
-    } catch (err) {
-        res.status(500).json({ error: "Nie udało się dodać zadania." });
+    const taskName = req.body.task.trim();  // Używamy .trim(), aby usunąć nadmiarowe białe znaki
+
+    console.log('Otrzymane zadanie:', taskName);
+
+    if (!taskName) {
+        return res.status(400).send("Nazwa zadania nie może być pusta");
     }
+
+    const newTask = new Task({ name: taskName });
+    await newTask.save();
+    // Zwracanie nowego zadania w odpowiedzi JSON
+    res.json(newTask);
 });
 
 // Usuwanie zadania
 app.delete("/delete", async (req, res) => {
     try {
         const taskId = req.body.taskId;
+        if (!taskId) {
+            return res.status(400).json({ error: "Brak ID zadania." });
+        }
+
         await Task.findByIdAndDelete(taskId);
         // Odpowiedź z sukcesem po usunięciu zadania
         res.json({ success: true });
