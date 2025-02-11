@@ -43,3 +43,16 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+//Obsługa usuwania elementu z listy
+async function deleteTask(taskId, buttonElement){
+    //wysłanie żądania z danymi JSON do serwera
+    const response = await fetch("/delete", {
+        method: "DELETE",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ taskId })
+    });
+
+    if (response.ok){
+        buttonElement.closest("li").remove();
+    }
+}
