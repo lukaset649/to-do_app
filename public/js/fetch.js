@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     //Pobranie elementów z DOM
     const taskForm = document.getElementById("taskForm");
     const taskInput = document.getElementById("taskInput");
-    const taskList = document.getElementsById("taskList");
+    const taskList = document.getElementById("taskList");
 
     //Obsługa asynchronicznego dodawania
     taskForm.addEventListener("submit", async (event) => {
