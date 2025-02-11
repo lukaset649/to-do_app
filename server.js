@@ -1,54 +1,68 @@
-const express = require("express"); //framework do obsługi http
-const mongoose = require("mongoose"); //baza danych MongoDB
-const bodyParser = require("body-parser"); //przetwarzanie formularzy
+const express = require("express"); // framework do obsługi HTTP
+const mongoose = require("mongoose"); // baza danych MongoDB
+const bodyParser = require("body-parser"); // przetwarzanie formularzy
 
 const app = express();
 const PORT = 3000;
 
-//połączenie z bazą danych
+// Połączenie z bazą danych MongoDB
 mongoose.connect("mongodb://127.0.0.1:27017/todoDB", {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
 
-//utworzenie schematu task'a dla bazy danych (MongoDB jest niestrukturalna, więc schemat określa jakie obiekt w bazie ma pola i typy)
+// Utworzenie schematu taska (zadania) dla bazy danych
 const taskSchema = new mongoose.Schema({
     name: String
 });
 
-//utworzenie modelu Task na podstawie schematu i przypisanie do zmiennej, aby móc wykonywać operacje na bazie
+// Utworzenie modelu Task na podstawie schematu i przypisanie go do zmiennej
 const Task = mongoose.model("Task", taskSchema);
 
-//konfiguracja aplikacji, obsługa formularzy, ststycznych plików i szablonów EJS
-app.use(bodyParser.urlencoded({extended: true }));
+// Konfiguracja aplikacji, obsługa formularzy, plików statycznych i szablonów EJS
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 
-//Defninicje trasy
-// Pobieranie zadań
+// Definicje tras
+// Pobieranie zadań z bazy danych i renderowanie widoku
 app.get("/", async (req, res) => {
-    //wyszukuje wszystkie dokumenty w kolekcji Task, await zapewnia czekanie na wynik zapytania
-    const tasks = await Task.find();
-    //renderowanie widoku ejs index 
-    res.render("index", { tasks: tasks });
+    try {
+        // Wyszukiwanie wszystkich dokumentów w kolekcji Task
+        const tasks = await Task.find();
+        // Renderowanie widoku index i przekazywanie danych zadań
+        res.render("index", { tasks: tasks });
+    } catch (err) {
+        res.status(500).json({ error: "Błąd podczas ładowania zadań." });
+    }
 });
 
-//dodawanie zadania
-app.post("/add", async (req, res) =>{
-    const taskName = req.body.task;
-    const newTask = new Task({ name: taskName });
-    await newTask.save();
-    res.redirect("/");
+// Dodawanie zadania
+app.post("/add", async (req, res) => {
+    try {
+        const taskName = req.body.task;
+        const newTask = new Task({ name: taskName });
+        await newTask.save();
+        // Odpowiadamy JSON-em z nowym zadaniem
+        res.json(newTask);
+    } catch (err) {
+        res.status(500).json({ error: "Nie udało się dodać zadania." });
+    }
 });
 
-//usuwanie zadania
-app.post("/delete", async(req, res) => {
-    const taskId = req.body.taskId;
-    await Task.findByIdAndDelete(taskId);
-    res.redirect("/");
+// Usuwanie zadania
+app.delete("/delete", async (req, res) => {
+    try {
+        const taskId = req.body.taskId;
+        await Task.findByIdAndDelete(taskId);
+        // Odpowiedź z sukcesem po usunięciu zadania
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ error: "Nie udało się usunąć zadania." });
+    }
 });
 
-//uruchomienie serwera na wskazanym porcie
+// Uruchomienie serwera na wskazanym porcie
 app.listen(PORT, () => {
     console.log(`Serwer działa na http://localhost:${PORT}`);
 });
