@@ -43,8 +43,6 @@ app.get("/", async (req, res) => {
 app.post("/add", async (req, res) => {
     const taskName = req.body.task.trim();  // Używamy .trim(), aby usunąć nadmiarowe białe znaki
 
-    console.log('Otrzymane zadanie:', taskName);
-
     if (!taskName) {
         return res.status(400).send("Nazwa zadania nie może być pusta");
     }

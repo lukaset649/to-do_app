@@ -18,8 +18,8 @@
             <% tasks.forEach(function(task) { %>
                 <!-- Sprawdź, czy task.name jest dostępne -->
                 <li id="task-<%= task._id %>">
-                    <button onclick="deleteTask('<%= task._id %>', this)">Usuń</button>
                     <%= task.name || "Brak nazwy" %> <!-- Dodajemy domyślną wartość w razie braku name -->
+                    <button onclick="deleteTask('<%= task._id %>', this)">Usuń</button>
                 </li>
             <% }); %>
         </ul>

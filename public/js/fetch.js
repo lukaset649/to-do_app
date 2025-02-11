@@ -33,8 +33,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const newTask = document.createElement("li");
             newTask.id = `task-${data._id}`;
             newTask.innerHTML = `
-                <button onclick="deleteTask('${data._id}', this)">Usuń</button>
                 ${data.name}
+                <button onclick="deleteTask('${data._id}', this)">Usuń</button>
             `;
             taskList.appendChild(newTask);
 
